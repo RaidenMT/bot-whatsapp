@@ -75,16 +75,29 @@ class BotWhatsapp:
         messages = message.split("\n")
         for msg in messages:
             send_msg.send_keys(msg)
-            send_msg.send_keys(Keys.SHIFT + Keys.ENTER)
+            time.sleep(1)
+            # send_msg.send_keys(Keys.SHIFT + Keys.ENTER)
+            send_msg.send_keys(Keys.ENTER)
             sleep(1)
 
-        send_msg.send_keys(Keys.ENTER)
-        print('mensaje enviado')
+
+        # https://www.youtube.com/watch?v=zYkyuW-a_Go
+        attachment_box = self.browser.find_element_by_xpath('//div[@class="_26lC3"][@role="button"]//span[@data-icon="clip"]')
+        attachment_box.click()
+        time.sleep(2)
+
+        image_box = self.browser.find_element_by_xpath('//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"][@type="file"]')
+        image_box.send_keys("F:\Proyectos\Web\Personal\/2021\/bot-whatsapp\IMG20211023140440.jpg")
+        time.sleep(2)
+
+
+        # send_msg.send_keys(Keys.ENTER)
+        send_btn = self.browser.find_element_by_xpath('//div[@class="_165_h _2HL9j"][@role="button"]//span[@data-icon="send"]')
+        send_btn.click()
         return True
 
     def search_user_or_group(self, contact):
         search = self.browser.find_element_by_xpath(self.base_input)
-        # search = self.browser.find_element_by_css_selector(self.base_input)
         search.clear()
         search.send_keys(contact)
         try:
@@ -103,4 +116,5 @@ class BotWhatsapp:
         return False
 
 obj = BotWhatsapp()
-obj.send_message_to_contact('59163580462', 'Hola Mundo!')
+obj.send_message_to_contact('59163580462', """Por fin amor
+Este es un mensaje automático y con imagen!""")
